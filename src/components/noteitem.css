@@ -1,0 +1,28 @@
+.side{
+    background-color: rgb(107, 238, 238);
+    position: relative;
+    min-width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+.main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.card-body span{
+    height: 25px;
+    background-color: chocolate;
+    padding: 0px 5px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+i{
+    cursor: pointer;
+}
