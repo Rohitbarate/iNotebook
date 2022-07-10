@@ -21,8 +21,8 @@ function Navbar() {
           <Link className={`nav-link ${location.pathname==="/about"? "active":" "} `} to="/about">about</Link>
         </li>
       </ul>
-      <Link class="btn btn-success mx-1" to="/login" role="button">Login</Link>
-      <Link class="btn btn-success mx-1" to="/signup" role="button">Signup</Link>
+      <Link className="btn btn-success mx-1" to="/login" role="button">Login</Link>
+      <Link className="btn btn-success mx-1" to="/signup" role="button">Signup</Link>
     </div>
   </div>
 </nav>

@@ -76,7 +76,7 @@ try{
         return res.status(401).send("NOt Allowed");
     }
 
-    note = await Notes.findOneAndUpdate(req.params.id, { $set: newnote }, { new: true });
+    note = await Notes.findOneAndUpdate({ "_id" : req.params.id},{ $set: newnote }, { new: true });
     res.json({ note })
 } catch (error) {
     console.error(error.message);
