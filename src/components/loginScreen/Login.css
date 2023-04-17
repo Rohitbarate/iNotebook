@@ -1,0 +1,31 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    transition: all 5s ease;
+}
+.form{
+    border: 1px solid rgb(62, 62, 62);
+    padding: 60px 20px;
+    height: max-content;
+    width: 45%;
+    min-width: 300px;
+    border-radius: 10px;
+   display: flex;
+   align-items: center;
+   flex-direction: column ;
+   justify-content: space-between;
+   box-shadow: 8px 8px 18px #000, -10px -10px 19px #cbcaca;
+}
+form{
+    width: 90%;
+
+}
+.form .convertLine{
+  font-size: 14px;
+  color: dimgrey;
+  margin-top: 30%;
+}

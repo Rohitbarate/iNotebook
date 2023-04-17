@@ -1,0 +1,33 @@
+.loadingText {
+    font-size: 2rem;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    /* transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loadingText span {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 5px solid #000;
+    border-top-color: rgb(241, 121, 29);
+    animation: rotate infinite 0.8s ease-in-out;
+    margin-top: 0;
+}
+
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
