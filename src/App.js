@@ -16,6 +16,7 @@ function App(props) {
     const user = localStorage.getItem("token");
     if (user) {
       setUser(user);
+
     }
   }, [user]);
 
@@ -37,7 +38,7 @@ function App(props) {
         />
         <Route
           path="/profile"
-          element={<About message={message} setMessage={setMessage} />}
+          element={<About user={user} setUser={setUser} message={message} setMessage={setMessage} />}
         />
         <Route
           path="/login"

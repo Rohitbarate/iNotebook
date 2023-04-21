@@ -141,7 +141,7 @@ function Home({ user }) {
             )}
           </form>
           <hr />
-          <Notes editingNote={editingNote} />
+          <Notes editingNote={editingNote} user={user} />
         </div>
       </>
     );

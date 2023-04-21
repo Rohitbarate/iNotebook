@@ -12,13 +12,13 @@ const NoteState = (props) => {
     // API request for get all notes
     const host = 'http://localhost:5000';
 
-    const getnotes = async () => {
+    const getnotes = async (token) => {
 
-        const response = await fetch(`${host}/api/notes/fetchnotes`,
+        const response = await fetch(`${host}/data/v1/note/getnotes`,
             {
                 method: 'GET',
                 headers: {
-                    "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI3MTNiZjNkYjQyNjAxNDcyZGZjY2E2In0sImlhdCI6MTY1MTU4ODA4M30.dOg859tPp815H2DPcbQnOJ9CJGqGO7hX4Kd0YwhuXWQ",
+                    "auth-token": token,
                     "Content-Type": "application/json"
                 }
             })
