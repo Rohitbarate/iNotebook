@@ -49,12 +49,22 @@ const loginUser = async (user) => {
   }
 };
 
-const getUser = async () => {
+const getUser = async (user) => {
   const token = localStorage.getItem("token");
   if (!token) {
-    return { type: "danger", msg: "login to access this page..!" };
+    return { message: { type: "danger", msg: "login to access this page..!" } };
   }
-  await fetch(`${baseUrl}/user/`)
+  const res =await fetch(`${baseUrl}/user/profile`, {
+    method: "GET",
+    headers: {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+      "Auth-token": token,
+    },
+  })
+  const data = await res.json();
+  // console.log("token", data.user);
+  return data
 };
 
-export { registerNewUser, loginUser };
+export { registerNewUser, loginUser, getUser };
