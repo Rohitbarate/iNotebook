@@ -2,34 +2,43 @@ import React, { useContext, useState } from "react";
 import Notes from "../Notes";
 import noteContext from "../../context/notes/NoteContext";
 import { Navigate } from "react-router-dom";
+import { addNotes, getNotes } from "../noteApi";
+import Loader from "../loader/Loader";
 
-function Home({ user }) {
+function Home(props) {
+  const { user,message, setMessage, notes, setNotes, loading, setLoading } = props;
   const context = useContext(noteContext);
   const {
-    addnotes,
+    // addnotes,
     enote,
     setIsEditingNote,
     setEnote,
-    notes,
+    // notes,
     updatenote,
     iseditingNote,
   } = context;
-  const [note, setNote] = useState({ title: "", description: "", tag: "" });
-
+  const [note, setNote] = useState({ title: "", description: "", label: "" });
+  // const [loading, setLoading] = useState(false);
   // add note
-  const addnoteHandler = (e) => {
+  const addnoteHandler = async (e) => {
     e.preventDefault();
     if (note.description !== "" && note.title !== "" && note.tag !== "") {
-      addnotes(note.title, note.description, note.tag);
+      console.log({ user, note });
+      setLoading(true);
+      const res = await addNotes(user, note);
+      setMessage(res.message);
       setNote({ title: "", description: "", tag: "" });
+      const data = await getNotes(user);
+      setNotes(data.notes);
+      setLoading(false);
     } else {
-      alert("plz fill the blank");
+      setMessage({ msg: "All fields are mandetory to fill.", type: "danger" });
     }
   };
 
   // update the note
 
-  const editingNote = (id) => {
+  const editingNote = async (id) => {
     setIsEditingNote(true);
     const editNote = notes.find((curNote) => {
       console.log(curNote._id);
@@ -67,20 +76,20 @@ function Home({ user }) {
           <form
             className=" addNoteForm mx-4 mb-4"
             id="form"
-            style={{ width: "60%" }}
+            style={{ width: "60%", padding: "10px 20px" }}
             onSubmit={(e) => {
               e.preventDefault();
             }}
           >
             <div className="mb-3">
-              <label htmlFor="tag" className="form-label">
+              <label htmlFor="label" className="form-label">
                 Tag :
               </label>
               <input
                 type="text"
                 className="form-control font-weight-bold"
                 id="tag"
-                name="tag"
+                name="label"
                 aria-describedby="tagHelp"
                 placeholder='Enter Tag name of your note ex. "Assignment"'
                 value={note.tag}
@@ -122,26 +131,33 @@ function Home({ user }) {
                 required
               />
             </div>
-            {!iseditingNote ? (
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={addnoteHandler}
-              >
-                Add Note
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className="btn btn-success"
-                onClick={updateNoteHandler}
-              >
-                Update Note
-              </button>
-            )}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={!iseditingNote ? addnoteHandler : updateNoteHandler}
+            >
+              {!iseditingNote ? "Add Note" : "Update Note"}
+            </button>
+
+            {/* /// <button//     type="submit"
+            //     className="btn btn-success"
+            //     onClick={updateNoteHandler}
+            //   >
+            //     Update Note
+            //   </button>
+            // ) */}
           </form>
           <hr />
-          <Notes editingNote={editingNote} user={user} />
+          <Notes
+            editingNote={editingNote}
+            user={user}
+            notes={notes}
+            setNotes={setNotes}
+            loading={loading}
+            setLoading={setLoading}
+            message={message}
+            setMessage={setMessage}
+          />
         </div>
       </>
     );

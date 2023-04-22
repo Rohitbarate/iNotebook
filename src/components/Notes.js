@@ -6,26 +6,27 @@ import { getNotes } from "./noteApi";
 import Loader from "./loader/Loader";
 
 const Notes = (props) => {
+  const { user, notes, setNotes, loading, setLoading } = props;
   const noteContext = useContext(NoteContext);
   //   const {notes, getnotes } = noteContext;
-  const [notes, setNotes] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [notes, setNotes] = useState([]);
+  // const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const token = props.user
-    if (!token) {
-      return <Navigate replace to={"/login"} />;
-    }
-    async function fetchNotes() {
-      setLoading(true);
-      const data = await getNotes(token);
-      setNotes(data.notes);
-      setLoading(false);
-      console.log(data.notes);
-    }
-    fetchNotes();
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   const token = props.user
+  //   if (!token) {
+  //     return <Navigate replace to={"/login"} />;
+  //   }
+  //   async function fetchNotes() {
+  //     setLoading(true);
+  //     const data = await getNotes(token);
+  //     setNotes(data.notes);
+  //     setLoading(false);
+  //     console.log(data.notes);
+  //   }
+  //   fetchNotes();
+  //   // eslint-disable-next-line
+  // }, []);
   return (
     <>
       <h1 className="text-center">Your Notes</h1>
@@ -40,9 +41,12 @@ const Notes = (props) => {
           notes.map((note) => {
             return (
               <NoteItems
+                user={user}
                 key={note._id}
                 note={note.note}
                 editingNote={props.editingNote}
+                notes={notes}
+                setNotes={setNotes}
               />
             );
           })

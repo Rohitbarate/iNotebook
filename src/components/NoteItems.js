@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import "./noteitem.css";
 import noteContext from "../context/notes/NoteContext";
+import { deleteNote } from "./noteApi";
 
 const NoteItems = (props) => {
   const context = useContext(noteContext);
-  const { title, description, label, deadLine } = props.note;
-  const { deletenote } = context;
+  const { user, notes, setNotes, message, setMessage } = props;
+  const { title, description, label, deadLine, _id } = props.note;
+  // const { deletenote } = context;
 
   const daysRemaining = (deadLine) => {
     const latestDate = new Date().getTime();
@@ -13,13 +15,20 @@ const NoteItems = (props) => {
     const diff = deadLineDate - latestDate;
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
   };
-  console.log();
   //  editingNote =(enote)=>{
   //     setNote(enote.title,enote.description,enote.tag);
   // }
   // const onchange = (e) => {
   //     setEnote({ ...enote, [e.target.name]: e.target.value })
   // }
+  const deleteNoteHandler = async () => {
+    console.log(_id);
+    const data = await deleteNote(user, _id);
+    if (data.notes) {
+      setNotes(data.notes);
+    }
+    setMessage(data.message);
+  };
 
   return (
     <>
@@ -38,13 +47,15 @@ const NoteItems = (props) => {
           <hr />
           <p className="card-text">{description}</p>
           <hr />
-          <p>Deadline : <b>{daysRemaining(deadLine)}</b>  days remaining</p>
+          <p>
+            Deadline : <b>{daysRemaining(deadLine)}</b> days remaining
+          </p>
         </div>
         <div className="side">
           <i
             className="fa-solid fa-trash-can"
             onClick={() => {
-              deletenote();
+              deleteNoteHandler();
             }}
           ></i>
           <i

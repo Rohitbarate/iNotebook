@@ -8,17 +8,30 @@ import About from "./components/AboutScreen/About";
 import NoteState from "./context/notes/NoteState";
 import MessageBox from "./components/messageBox/MessageBox";
 import { useEffect, useState } from "react";
+import { getNotes } from "./components/noteApi";
 
 function App(props) {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const user = localStorage.getItem("token");
     if (user) {
       setUser(user);
-
+      async function fetchNotes() {
+        setLoading(true);
+        const data = await getNotes(user);
+        console.log(data);
+        if (data.notes) {
+          setNotes(data.notes);
+        }
+        setLoading(false);
+      }
+      fetchNotes();
     }
-  }, [user]);
+  }, [notes]);
 
   setTimeout(() => {
     setMessage(null);
@@ -33,12 +46,29 @@ function App(props) {
           exact
           path="/"
           element={
-            <Home user={user} message={message} setMessage={setMessage} />
+            <Home
+              user={user}
+              message={message}
+              setMessage={setMessage}
+              setNotes={setNotes}
+              notes={notes}
+              loading={loading}
+              setLoading={setLoading}
+            />
           }
         />
         <Route
           path="/profile"
-          element={<About user={user} setUser={setUser} message={message} setMessage={setMessage} />}
+          element={
+            <About
+              user={user}
+              setUser={setUser}
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          }
         />
         <Route
           path="/login"

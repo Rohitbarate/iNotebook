@@ -28,9 +28,22 @@ const addNotes = async (token, note) => {
       body: JSON.stringify(note),
     });
     const data = await res.json();
-    return data
+    return data;
   } catch (error) {
     console.log("frontend error : ", error);
   }
 };
-export { getNotes, addNotes };
+
+const deleteNote = async (token, noteId) => {
+  const res = await fetch(`${baseUrl}/note/delete/${noteId}`, {
+    method: "PUT",
+    headers: {
+      "auth-token": token,
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await res.json();
+  return data;
+};
+
+export { getNotes, addNotes,deleteNote };
